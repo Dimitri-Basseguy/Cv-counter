@@ -55,6 +55,7 @@
     "webpack-merge": "*"
   },
   "dependencies": {
+    "dateformat": "^4.0.0",
     "prop-types": "*",
     "react": "*",
     "react-dom": "*"
