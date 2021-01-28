@@ -15,7 +15,7 @@ const App = () => {
   /** Nombre d'envoi */
   const [counter, setCounter] = useState(initialCounter);
   /** Stamp Timer */
-  const startDate = new Date().toString();
+  const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date());
   const [timer, setTimer] = useState(startDate);
   const dateStorage = localStorage.getItem('Date');
   const dates = JSON.parse(dateStorage);
@@ -27,8 +27,8 @@ const App = () => {
 
   const handleClicButton = (e) => {
     e.preventDefault();
-
-    setTimer(new Date().toString());
+    const timeStamp = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date());
+    setTimer(timeStamp.toString());
 
     const ids = dates.map((date) => date.id);
     let idMax = 0;
@@ -53,10 +53,10 @@ const App = () => {
       <button type="submit" className="btn-grad" onClick={handleClicButton}>
         +1
       </button>
-      <p>Total : {counter}</p>
-      {dates.map((date) => (
+      <p>Total : {dates.length}</p>
+      {/* {dates.map((date) => (
         <p key={date.id}> Id: {date.id} Date : {date.date} </p>
-      ))}
+      ))} */}
     </div>
   );
 };
