@@ -1,62 +1,75 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
+import LineChart from 'src/components/Chart';
 
 // == Import
-import './styles.scss';
+import './app.scss';
 
 // == Composant
 const App = () => {
   // initialisation du localstore
-  if (localStorage.getItem('Date') === null) {
-    localStorage.setItem('Date', JSON.stringify([]));
+  if (localStorage.getItem('Datas') === null) {
+    localStorage.setItem('Datas', JSON.stringify([]));
   }
 
   const initialCounter = () => Number(localStorage.getItem('count') || 0);
-  /** Nombre d'envoi */
   const [counter, setCounter] = useState(initialCounter);
-  /** Stamp Timer */
-  const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date());
+  const [dayCounter, setDayCounter] = useState(0);
+  /** la date du jour */
+  // const startDate = '07/02/2021';
+  const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date());
   const [timer, setTimer] = useState(startDate);
-  const dateStorage = localStorage.getItem('Date');
-  const dates = JSON.parse(dateStorage);
-
+  /** les datas du localStore converties */
+  const datas = JSON.parse(localStorage.getItem('Datas'));
+  /** la data du jour actuel */
+  const todayData = datas.find((data) => data.date === startDate);
+  // console.log(todayData.count);
   useEffect(() => {
-    localStorage.setItem('Date', JSON.stringify(dates));
+    localStorage.setItem('Datas', JSON.stringify(datas));
     localStorage.setItem('count', counter);
   }, [timer]);
 
   const handleClicButton = (e) => {
     e.preventDefault();
-    const timeStamp = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short', timeStyle: 'short' }).format(new Date());
+    const timeStamp = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date());
     setTimer(timeStamp.toString());
+    setCounter(counter + 1);
+    setDayCounter(dayCounter + 1);
 
-    const ids = dates.map((date) => date.id);
+    const ids = datas.map((date) => date.id);
     let idMax = 0;
     if (ids.length > 0) {
       idMax = Math.max(...ids);
     }
 
-    const newDate = {
-      id: idMax + 1,
-      date: timer,
-    };
+    if (todayData) {
+      todayData.count += 1;
+    }
+    else {
+      const newData = {
+        id: idMax + 1,
+        date: timer,
+        count: dayCounter + 1,
+      };
+      datas.push(newData);
+    }
 
-    dates.push(newDate);
-    setCounter(dates.length);
-    localStorage.setItem('Date', JSON.stringify(dates));
-    localStorage.setItem('count', counter);
+    localStorage.setItem('Datas', JSON.stringify(datas));
+    localStorage.setItem('count', counter + 1);
   };
+
+  // console.log(datasDays());
+  // console.log(datasCounts());
 
   return (
     <div className="app">
-      <h1>Compteur de CV envoyés</h1>
+      <h1 className="app__title">Compteur de CV envoyés</h1>
       <button type="submit" className="btn-grad" onClick={handleClicButton}>
         +1
       </button>
-      <p>Total : {dates.length}</p>
-      {/* {dates.map((date) => (
-        <p key={date.id}> Id: {date.id} Date : {date.date} </p>
-      ))} */}
+      <p>Total : {counter}</p>
+      {/* <p>Aujourd'hui:{todayData === null ? 0 : todayData.count}</p> */}
+      <LineChart dataStorage={datas} />
     </div>
   );
 };
