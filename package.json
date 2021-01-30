@@ -55,9 +55,11 @@
     "webpack-merge": "*"
   },
   "dependencies": {
+    "chart.js": "^2.9.4",
     "dateformat": "^4.0.0",
     "prop-types": "*",
     "react": "*",
+    "react-chartjs-2": "^2.11.1",
     "react-dom": "*"
   }
 }
