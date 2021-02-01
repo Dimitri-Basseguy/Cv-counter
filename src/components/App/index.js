@@ -1,6 +1,7 @@
 // == Import npm
 import React, { useState, useEffect } from 'react';
 import LineChart from 'src/components/Chart';
+import Form from 'src/components/Form';
 
 // == Import
 import './app.scss';
@@ -15,6 +16,7 @@ const App = () => {
   const initialCounter = () => Number(localStorage.getItem('count') || 0);
   const [counter, setCounter] = useState(initialCounter);
   const [dayCounter, setDayCounter] = useState(0);
+  const [link, setLink] = useState('');
   /** la date du jour */
   // const startDate = '07/02/2021';
   const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date());
@@ -23,10 +25,13 @@ const App = () => {
   const datas = JSON.parse(localStorage.getItem('Datas'));
   /** la data du jour actuel */
   const todayData = datas.find((data) => data.date === startDate);
-  // console.log(todayData.count);
+
   useEffect(() => {
     localStorage.setItem('Datas', JSON.stringify(datas));
     localStorage.setItem('count', counter);
+    // if (todayData != null) {
+    //   todayData.links.push(link);
+    // }
   }, [timer]);
 
   const handleClicButton = (e) => {
@@ -42,34 +47,53 @@ const App = () => {
       idMax = Math.max(...ids);
     }
 
-    if (todayData) {
+    if (todayData != null) {
       todayData.count += 1;
+      todayData.links.push(link);
+      setLink('');
     }
     else {
       const newData = {
         id: idMax + 1,
         date: timer,
         count: dayCounter + 1,
+        links: [link],
       };
       datas.push(newData);
+      setLink('');
     }
 
     localStorage.setItem('Datas', JSON.stringify(datas));
     localStorage.setItem('count', counter + 1);
   };
 
-  // console.log(datasDays());
-  // console.log(datasCounts());
+  const mappedLinks = () => {
+    if (todayData != null) {
+      const todayslinks = todayData.links;
+      return (
+        <ul>
+          {/* <li><a href={todayslinks} target="_blank" rel="noopener noreferrer">{todayslinks}</a></li> */}
+          {todayslinks.map((todaylink) => (<li><a href={todaylink} target="_blank" rel="noopener noreferrer">{todaylink}</a></li>))}
+        </ul>
+      );
+    }
+    return (
+      <ul>
+        <li>Pas de liens d'annonces...</li>
+      </ul>
+    );
+  };
 
   return (
     <div className="app">
       <h1 className="app__title">Compteur de CV envoyés</h1>
-      <button type="submit" className="btn-grad" onClick={handleClicButton}>
-        +1
-      </button>
+      <Form handleClicButton={handleClicButton} link={link} setLink={setLink} />
       <p>Total : {counter}</p>
-      {/* <p>Aujourd'hui:{todayData === null ? 0 : todayData.count}</p> */}
       <LineChart dataStorage={datas} />
+      <div className="links">
+        <p>Liens d'annonces répondues</p>
+        {mappedLinks()}
+      </div>
     </div>
   );
 };
