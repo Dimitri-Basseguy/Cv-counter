@@ -5,6 +5,8 @@ import Form from 'src/components/Form';
 
 // == Import
 import './app.scss';
+/** Data des site de jobs */
+import jobBoards from 'src/datas/jobboards';
 
 // == Composant
 const App = () => {
@@ -18,8 +20,8 @@ const App = () => {
   const [dayCounter, setDayCounter] = useState(0);
   const [link, setLink] = useState('');
   /** la date du jour */
-  // const startDate = '07/02/2021';
-  const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date());
+  const startDate = '02/02/2021';
+  // const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date());
   const [timer, setTimer] = useState(startDate);
   /** les datas du localStore converties */
   const datas = JSON.parse(localStorage.getItem('Datas'));
@@ -67,13 +69,35 @@ const App = () => {
     localStorage.setItem('count', counter + 1);
   };
 
+  /**
+   * Renvoi le bon logo aux liens d'annonces
+   * @return string
+   */
+  const findLogo = (param) => {
+    let url = '';
+    jobBoards.forEach((jobBoard) => {
+      if (param.includes(jobBoard.board) === true) {
+        url = jobBoard.img;
+      }
+    });
+
+    return url;
+  };
+
   const mappedLinks = () => {
     if (todayData != null) {
       const todayslinks = todayData.links;
       return (
         <ul>
-          {/* <li><a href={todayslinks} target="_blank" rel="noopener noreferrer">{todayslinks}</a></li> */}
-          {todayslinks.map((todaylink) => (<li><a href={todaylink} target="_blank" rel="noopener noreferrer">{todaylink}</a></li>))}
+          <p>Date : {todayData.date}</p>
+          {todayslinks.map((todaylink) => (
+            <>
+              <li className="jobboard">
+                <img className="jobboard__img" src={findLogo(todaylink)} alt="" />
+                <a href={todaylink} target="_blank" rel="noopener noreferrer">{todaylink}</a>
+              </li>
+            </>
+          ))}
         </ul>
       );
     }
@@ -84,17 +108,35 @@ const App = () => {
     );
   };
 
+  const todayCounts = () => {
+    if (todayData != null) {
+      const todaysCount = todayData.count;
+      return todaysCount;
+    }
+    return (
+      0
+    );
+  };
+
   return (
-    <div className="app">
-      <h1 className="app__title">Compteur de CV envoyés</h1>
-      <Form handleClicButton={handleClicButton} link={link} setLink={setLink} />
-      <p>Total : {counter}</p>
-      <LineChart dataStorage={datas} />
-      <div className="links">
-        <p>Liens d'annonces répondues</p>
-        {mappedLinks()}
+    <>
+      <div className="bg-image" />
+      <div className="app">
+        <div className="app__title">
+          <h1>Compteur de CV envoyés</h1>
+          <div className="count">
+            <p className="count__total">Total : {counter}</p>
+            <p>Aujourd'hui : {todayCounts()}</p>
+          </div>
+        </div>
+        <Form handleClicButton={handleClicButton} link={link} setLink={setLink} />
+        <LineChart dataStorage={datas} />
+        <div className="links">
+          <p>Liens d'annonces répondues</p>
+          {mappedLinks()}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
 

@@ -3,9 +3,13 @@
 
 body {
   font-family: 'Poppins', sans-serif;
-  background-color:  $bgColor;
+  height: 100%;
+  background-image: url(https://wallpaperaccess.com/full/1271557.jpg);
+  // height: 100vh;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
 }
-
 /* 
   // or you can import your own font
   @font-face {

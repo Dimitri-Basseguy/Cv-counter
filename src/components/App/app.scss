@@ -1,12 +1,15 @@
 @import 'src/styles/_vars.scss';
+
 .app {
+  backdrop-filter: blur(3px);
   width: 80%;
   max-width: 800px;
   margin: 1em auto;
   padding: 2rem;
   text-align: center;
   border-radius: 3px;
-  background-color: $bgAppColor;
+  background-color: rgba(255, 255, 255, 0.336);
+  background-blend-mode: color-dodge;
   -webkit-box-shadow: 0px 19px 29px -15px rgba(0,0,0,0.75);
   -moz-box-shadow: 0px 19px 29px -15px rgba(0,0,0,0.75);
   box-shadow: 0px 19px 29px -15px rgba(0,0,0,0.75);
@@ -26,6 +29,20 @@
     border-top-left-radius: 5px;
     border-top-right-radius: 5px;
     box-shadow: $shadow;
+  }
+}
+
+.jobboard {
+  display: flex;
+  align-items: center;
+  text-align: left;
+
+
+  &__img {
+    margin-right: 1rem;
+    width: 50px;
+    height: auto;
+    border-radius: 4px;
   }
 }
 
@@ -53,9 +70,23 @@ h1 {
   font-size: 2em;
 }
 
+.count {
+  background-color: $darkColor;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 9px 19px -10px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0px 9px 19px -10px rgba(0,0,0,0.3);
+  box-shadow: $shadow;
+  padding: 1rem;
+  margin-top: 2rem;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
 .btn-grad {
-  margin: 3rem;
-  width: 300px;
+  margin-top: 2rem;
+  width: 80%;
+  max-width: 300px;
   height: 200px;
   font-size: 4em;
   border: none;
@@ -74,5 +105,5 @@ h1 {
   color: #fff;
   text-decoration: none;
   }
- }
+}
  

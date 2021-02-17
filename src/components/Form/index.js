@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import './form.scss';
 
 const Form = ({ link, setLink, handleClicButton }) => (
-  <form className="form" action="submit">
+  <form className="form" action="submit" onSubmit={handleClicButton}>
     <p>Lien de l'annonce</p>
     <input
       className="form__input"
@@ -17,7 +17,7 @@ const Form = ({ link, setLink, handleClicButton }) => (
         setLink(e.target.value);
       }}
     />
-    <button type="submit" className="btn-grad" onClick={handleClicButton}>
+    <button type="submit" className="btn-grad">
       +1
     </button>
   </form>
