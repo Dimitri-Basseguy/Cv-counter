@@ -36,13 +36,16 @@
   display: flex;
   align-items: center;
   text-align: left;
+  justify-content: center;
 
 
   &__img {
     margin-right: 1rem;
-    width: 50px;
+    width: 80px;
     height: auto;
+    padding: .3rem;
     border-radius: 4px;
+    background-color: white;
   }
 }
 
@@ -54,14 +57,31 @@
   box-shadow: $shadow;
   padding: 1rem;
   margin-top: 2rem;
+
+  &__date{
+    margin-top: 2rem;
+  }
   
   li {
-    font-size: 12px;
-    margin: .5rem;
-    padding: .5rem;
-    border-top: 1px solid $lightColor;
+    font-size: .8em;
+    // margin: .5rem;
+    padding: .8rem;
+    transition: background-color 0.5s ease;
+    transition: transform 0.2s ease;
+    transition: box-shadow 0.2s ease;
+    border-bottom: 1px solid #edeefa;
+    // border-top: 1px solid $lightColor;
     &:hover{
-      background-color: $bgAppColor;
+      background-color: $darkColor;
+      border-radius: 5px;
+      color: white;
+      -webkit-transform: scale(1.02);
+      -ms-transform: scale(1.02);
+      transform: scale(1.02);
+      // cursor: pointer;
+      -webkit-box-shadow: 0px 5px 15px -8px rgba(0,0,0,0.75);
+      -moz-box-shadow: 0px 5px 15px -8px rgba(0,0,0,0.75);
+      box-shadow: 0px 5px 15px -8px rgba(0,0,0,0.75);
     }
   }
 }

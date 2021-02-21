@@ -20,11 +20,13 @@ const App = () => {
   const [dayCounter, setDayCounter] = useState(0);
   const [link, setLink] = useState('');
   /** la date du jour */
-  const startDate = '02/02/2021';
-  // const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date());
+  // const startDate = '22/02/2021';
+  const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date());
   const [timer, setTimer] = useState(startDate);
   /** les datas du localStore converties */
   const datas = JSON.parse(localStorage.getItem('Datas'));
+  /** les datas du localStore converties et inversé */
+  const datasReverse = datas.slice().reverse();
   /** la data du jour actuel */
   const todayData = datas.find((data) => data.date === startDate);
 
@@ -84,21 +86,28 @@ const App = () => {
     return url;
   };
 
+  /**
+   * Liste les liens d'annonces répondus
+   * @return jsx
+   */
   const mappedLinks = () => {
-    if (todayData != null) {
-      const todayslinks = todayData.links;
+    if (datasReverse != null) {
       return (
-        <ul>
-          <p>Date : {todayData.date}</p>
-          {todayslinks.map((todaylink) => (
-            <>
-              <li className="jobboard">
-                <img className="jobboard__img" src={findLogo(todaylink)} alt="" />
-                <a href={todaylink} target="_blank" rel="noopener noreferrer">{todaylink}</a>
-              </li>
-            </>
-          ))}
-        </ul>
+        datasReverse.map((data) => (
+          <>
+            <p className="links__date">Date : {data.date}</p>
+            <ul>
+              {data.links.map((datalink) => (
+                <a href={datalink} target="_blank" rel="noopener noreferrer">
+                  <li className="jobboard">
+                    <img className="jobboard__img" src={findLogo(datalink)} alt="" />
+                    Voir l'annonce
+                  </li>
+                </a>
+              ))}
+            </ul>
+          </>
+        ))
       );
     }
     return (

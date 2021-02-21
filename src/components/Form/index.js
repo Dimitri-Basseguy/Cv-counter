@@ -4,7 +4,7 @@ import './form.scss';
 
 const Form = ({ link, setLink, handleClicButton }) => (
   <form className="form" action="submit" onSubmit={handleClicButton}>
-    <p>Lien de l'annonce</p>
+    <p>Ajoutez votre Lien de l'annonce ici</p>
     <input
       className="form__input"
       type="url"
