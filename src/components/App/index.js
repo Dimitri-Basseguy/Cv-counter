@@ -18,7 +18,7 @@ const App = () => {
   const initialCounter = () => Number(localStorage.getItem('count') || 0);
   const [counter, setCounter] = useState(initialCounter);
   const [dayCounter, setDayCounter] = useState(0);
-  const [link, setLink] = useState('');
+  const [link, setLink] = useState({ title: '', url: '' });
   /** la date du jour */
   // const startDate = '22/02/2021';
   const startDate = new Intl.DateTimeFormat('fr-FR', { dateStyle: 'short' }).format(new Date());
@@ -54,7 +54,7 @@ const App = () => {
     if (todayData != null) {
       todayData.count += 1;
       todayData.links.push(link);
-      setLink('');
+      setLink({ title: '', url: '' });
     }
     else {
       const newData = {
@@ -64,7 +64,7 @@ const App = () => {
         links: [link],
       };
       datas.push(newData);
-      setLink('');
+      setLink({ title: '', url: '' });
     }
 
     localStorage.setItem('Datas', JSON.stringify(datas));
@@ -98,10 +98,10 @@ const App = () => {
             <p className="links__date">Date : {data.date}</p>
             <ul>
               {data.links.map((datalink) => (
-                <a href={datalink} target="_blank" rel="noopener noreferrer">
+                <a href={datalink.url} target="_blank" rel="noopener noreferrer">
                   <li className="jobboard">
-                    <img className="jobboard__img" src={findLogo(datalink)} alt="" />
-                    Voir l'annonce
+                    <img className="jobboard__img" src={findLogo(datalink.url)} alt="" />
+                    {datalink.title}
                   </li>
                 </a>
               ))}

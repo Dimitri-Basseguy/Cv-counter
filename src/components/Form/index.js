@@ -4,17 +4,29 @@ import './form.scss';
 
 const Form = ({ link, setLink, handleClicButton }) => (
   <form className="form" action="submit" onSubmit={handleClicButton}>
-    <p>Ajoutez votre Lien de l'annonce ici</p>
+    <p>Ajoutez votre annonce ici</p>
+    <input
+      className="form__input"
+      type="text"
+      name="inputTitle"
+      id="inputTitle"
+      value={link.title}
+      required
+      placeholder="Titre du poste"
+      onChange={(e) => {
+        setLink({ ...link, title: e.target.value });
+      }}
+    />
     <input
       className="form__input"
       type="url"
       name="inputUrl"
       id="inputUrl"
-      value={link}
+      value={link.url}
       required
-      placeholder="url ici"
+      placeholder="Url de l'annonce"
       onChange={(e) => {
-        setLink(e.target.value);
+        setLink({ ...link, url: e.target.value });
       }}
     />
     <button type="submit" className="btn-grad">
@@ -25,7 +37,10 @@ const Form = ({ link, setLink, handleClicButton }) => (
 
 Form.propTypes = {
   handleClicButton: PropTypes.func.isRequired,
-  link: PropTypes.string.isRequired,
+  link: PropTypes.shape({
+    title: PropTypes.string.isRequired,
+    url: PropTypes.string.isRequired,
+  }).isRequired,
   setLink: PropTypes.func.isRequired,
 };
 
