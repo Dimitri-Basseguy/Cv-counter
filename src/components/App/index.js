@@ -97,14 +97,26 @@ const App = () => {
           <>
             <p className="links__date">Date : {data.date}</p>
             <ul>
-              {data.links.map((datalink) => (
-                <a href={datalink.url} target="_blank" rel="noopener noreferrer">
-                  <li className="jobboard">
-                    <img className="jobboard__img" src={findLogo(datalink.url)} alt="" />
-                    {datalink.title}
-                  </li>
-                </a>
-              ))}
+              {data.links.map((datalink) => {
+                if (datalink.url != null) {
+                  return (
+                    <a href={datalink.url} target="_blank" rel="noopener noreferrer">
+                      <li className="jobboard">
+                        <img className="jobboard__img" src={findLogo(datalink.url)} alt="" />
+                        {datalink.title}
+                      </li>
+                    </a>
+                  );
+                }
+                return (
+                  <a href={datalink} target="_blank" rel="noopener noreferrer">
+                    <li className="jobboard">
+                      <img className="jobboard__img" src={findLogo(datalink)} alt="" />
+Voir l'annonce
+</li>
+                  </a>
+                );
+              })}
             </ul>
           </>
         ))
