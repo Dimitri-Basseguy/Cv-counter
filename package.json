@@ -59,6 +59,7 @@
     "dateformat": "^4.0.0",
     "prop-types": "*",
     "react": "*",
+    "react-accessible-accordion": "^3.3.4",
     "react-chartjs-2": "^2.11.1",
     "react-dom": "*"
   }

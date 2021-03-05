@@ -7361,6 +7361,11 @@ raw-body@2.4.0:
     iconv-lite "0.4.24"
     unpipe "1.0.0"
 
+react-accessible-accordion@^3.3.4:
+  version "3.3.4"
+  resolved "https://registry.yarnpkg.com/react-accessible-accordion/-/react-accessible-accordion-3.3.4.tgz#84b08015e74d6b3b225e0101b518b2ea8969e292"
+  integrity sha512-EUq+KmVRIIG5u1fR5XIbb2JU7w7NouLjuyfuPvnhuDIfNNWNYap1I8ijn2rdA6OQi1gGSRGbVzHs+3wxH/M0Sw==
+
 react-chartjs-2@^2.11.1:
   version "2.11.1"
   resolved "https://registry.yarnpkg.com/react-chartjs-2/-/react-chartjs-2-2.11.1.tgz#a78d0df05fc8bc8ffcd4c4ab5b89a25dd2ca3278"

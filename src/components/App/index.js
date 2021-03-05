@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import LineChart from 'src/components/Chart';
 import Form from 'src/components/Form';
+import List from 'src/components/List';
 
 // == Import
 import './app.scss';
@@ -86,49 +87,6 @@ const App = () => {
     return url;
   };
 
-  /**
-   * Liste les liens d'annonces répondus
-   * @return jsx
-   */
-  const mappedLinks = () => {
-    if (datasReverse != null) {
-      return (
-        datasReverse.map((data) => (
-          <>
-            <p className="links__date">Date : {data.date}</p>
-            <ul>
-              {data.links.map((datalink) => {
-                if (datalink.url != null) {
-                  return (
-                    <a href={datalink.url} target="_blank" rel="noopener noreferrer">
-                      <li className="jobboard">
-                        <img className="jobboard__img" src={findLogo(datalink.url)} alt="" />
-                        {datalink.title}
-                      </li>
-                    </a>
-                  );
-                }
-                return (
-                  <a href={datalink} target="_blank" rel="noopener noreferrer">
-                    <li className="jobboard">
-                      <img className="jobboard__img" src={findLogo(datalink)} alt="" />
-Voir l'annonce
-</li>
-                  </a>
-                );
-              })}
-            </ul>
-          </>
-        ))
-      );
-    }
-    return (
-      <ul>
-        <li>Pas de liens d'annonces...</li>
-      </ul>
-    );
-  };
-
   const todayCounts = () => {
     if (todayData != null) {
       const todaysCount = todayData.count;
@@ -152,10 +110,7 @@ Voir l'annonce
         </div>
         <Form handleClicButton={handleClicButton} link={link} setLink={setLink} />
         <LineChart dataStorage={datas} />
-        <div className="links">
-          <p>Liens d'annonces répondues</p>
-          {mappedLinks()}
-        </div>
+        <List datasReverse={datasReverse} findLogo={findLogo} />
       </div>
     </>
   );
