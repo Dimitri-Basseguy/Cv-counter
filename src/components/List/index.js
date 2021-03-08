@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React from 'react';
 
 import {
@@ -68,6 +69,13 @@ const List = ({ datasReverse, findLogo }) => {
       {mappedLinks()}
     </div>
   );
+};
+
+List.propTypes = {
+  datasReverse: PropTypes.shape({
+    map: PropTypes.func.isRequired,
+  }).isRequired,
+  findLogo: PropTypes.func.isRequired,
 };
 
 export default List;
